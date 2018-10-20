@@ -17,6 +17,16 @@ def moveToFront(sequence = [], inputList = []):
 
 
 
+def main():
+    theList = random.sample(xrange(10000),500)
+    sequence = []
+
+    for i in range(100):
+        sequence.append(theList[random.randint(0,len(theList)-1)])
+    # print sequence
+    cost = (moveToFront(sequence, theList))[1]
+    print(cost)
+
 
 class TestMTF(unittest.TestCase):
 
@@ -29,4 +39,5 @@ class TestMTF(unittest.TestCase):
         self.assertEqual(moveToFront([1,2],[5,4,3,2,1])[1], 18)
 
 if __name__== "__main__":
-    unittest.main()
+    # unittest.main()
+    main()
