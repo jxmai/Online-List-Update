@@ -1,5 +1,6 @@
 import random
 import unittest
+import copy
 # import matplotlib.pyplot as plt
 # import numpy as np
 # import math
@@ -7,18 +8,20 @@ import unittest
 # Assume no free exchanges
 def moveToFront(sequence = [], inputList = []):
     totalCost = 0
+    outputList = copy.deepcopy(inputList)
 
     for s in sequence:
-        for i in range(len(inputList)):
-            if(inputList[i] == s):
+        for i in range(len(outputList)):
+            if(outputList[i] == s):
                 totalCost += 2 * i + 1
-                inputList.insert(0, inputList.pop(i))
-    return inputList, totalCost
+                outputList.insert(0, outputList.pop(i))
+    return outputList, totalCost
 
 
 
 def main():
-    theList = random.sample(xrange(10000),500)
+    theList = random.sample(xrange(10000),10)
+    # print(theList)
     sequence = []
 
     for i in range(100):
@@ -39,5 +42,5 @@ class TestMTF(unittest.TestCase):
         self.assertEqual(moveToFront([1,2],[5,4,3,2,1])[1], 18)
 
 if __name__== "__main__":
-    # unittest.main()
-    main()
+    unittest.main()
+    # main()
