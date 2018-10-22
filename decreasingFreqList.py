@@ -33,16 +33,21 @@ def accessDecreasingFreqList(sequence = [], inputList = []):
                     previousIndex = previousIndex - 1
                 if not inserted:
                     outputList.insert(0, popped)
-                totalCost += i - previousIndex
+                    totalCost += i
+                else:
+                    totalCost += i - previousIndex
+
     return outputList, totalCost
 
 
 class TestDFC(unittest.TestCase):
     def test_DFC_1(self):
         self.assertEqual(accessDecreasingFreqList([1],[5,4,3,2,1])[0], [1,5,4,3,2])
+        self.assertEqual(accessDecreasingFreqList([1],[5,4,3,2,1])[1], 9)
 
     def test_DFC_2(self):
         self.assertEqual(accessDecreasingFreqList([1,2],[5,4,3,2,1])[0], [1,2,5,4,3])
+        self.assertEqual(accessDecreasingFreqList([1,2],[5,4,3,2,1])[1], 9 + 9)
 
     def test_DFC_3(self):
         self.assertEqual(accessDecreasingFreqList([1,2,2],[5,4,3,2,1])[0], [2,1,5,4,3])
