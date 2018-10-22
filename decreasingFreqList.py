@@ -42,6 +42,15 @@ class TestDFC(unittest.TestCase):
 
     def test_DFC_3(self):
         self.assertEqual(accessDecreasingFreqList([1,2,2],[5,4,3,2,1]), [2,1,5,4,3])
+    
+    def test_DFC_4(self):
+        self.assertEqual(accessDecreasingFreqList([1,2,2,5],[5,4,3,2,1]), [2,1,5,4,3])
+
+    def test_DFC_5(self):
+        self.assertEqual(accessDecreasingFreqList([1,2,2,5,5],[5,4,3,2,1]), [2,5,1,4,3])
+
+    def test_DFC_6(self):
+        self.assertEqual(accessDecreasingFreqList([1,2,2,5,5,3,3,3,3],[5,4,3,2,1]), [3,2,5,1,4])
 
 if __name__== "__main__":
     unittest.main()
