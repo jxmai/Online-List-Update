@@ -21,24 +21,6 @@ def moveToFront(sequence = [], inputList = []):
 def decreasingFreqListUpdate():
     pass
 
-
-def main():
-    theList = random.sample(xrange(10000),10)
-    # print(theList)
-    sequence = []
-
-    # adversary sequence
-    sequence = theList[::-1]
-    # print(sequence)
-
-    #random sequence (hide for now)
-    # for i in range(100):
-    #     sequence.append(theList[random.randint(0,len(theList)-1)])
-    # print sequence
-    cost = (moveToFront(sequence, theList))[1]
-    print(cost)
-
-
 class TestMTF(unittest.TestCase):
 
     def test_MTF_1(self):
@@ -51,4 +33,3 @@ class TestMTF(unittest.TestCase):
 
 if __name__== "__main__":
     unittest.main()
-    # main()
