@@ -50,5 +50,5 @@ class TestMTF(unittest.TestCase):
         self.assertEqual(moveToFront([1,2],[5,4,3,2,1])[1], 18)
 
 if __name__== "__main__":
-    # unittest.main()
-    main()
+    unittest.main()
+    # main()
