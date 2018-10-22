@@ -17,6 +17,9 @@ def moveToFront(sequence = [], inputList = []):
                 outputList.insert(0, outputList.pop(i))
     return outputList, totalCost
 
+# Assume no free exchanges, and ingore the initial rearrange cost
+def decreasingFreqListUpdate():
+    pass
 
 
 def main():
