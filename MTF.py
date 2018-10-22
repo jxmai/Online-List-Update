@@ -24,8 +24,13 @@ def main():
     # print(theList)
     sequence = []
 
-    for i in range(100):
-        sequence.append(theList[random.randint(0,len(theList)-1)])
+    # adversary sequence
+    sequence = theList[::-1]
+    # print(sequence)
+
+    #random sequence (hide for now)
+    # for i in range(100):
+    #     sequence.append(theList[random.randint(0,len(theList)-1)])
     # print sequence
     cost = (moveToFront(sequence, theList))[1]
     print(cost)
@@ -42,5 +47,5 @@ class TestMTF(unittest.TestCase):
         self.assertEqual(moveToFront([1,2],[5,4,3,2,1])[1], 18)
 
 if __name__== "__main__":
-    unittest.main()
-    # main()
+    # unittest.main()
+    main()
