@@ -54,6 +54,9 @@ class TestTimestamp(unittest.TestCase):
     def test_timestamp_access_1(self):
         self.assertEqual(accessTimestamp([5], [1,2,3,4,5]), [1,2,3,4,5])
 
+    def test_timestamp_access_2(self):
+        self.assertEqual(accessTimestamp([5,5], [1,2,3,4,5]), [5,1,2,3,4])
+
 
 
 if __name__== "__main__":
