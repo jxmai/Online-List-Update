@@ -10,7 +10,8 @@ from fractions import Fraction
 
 
 def main():
-    theList = random.sample(xrange(10000),300)
+    # Increase the size of the list to yield a better result (e.g. set size to 300), but it will take longer to run
+    theList = random.sample(xrange(10000),100)
     # print(theList)
     sequence = []
 
