@@ -18,7 +18,7 @@ def accessTimestamp(sequence = [], inputList = []):
                     for j in range (0,i):
                         if timestampWindow.count(outputList[j]) <= 1:
                             popped = outputList.pop(i)
-                            outputList.insert(i, popped)
+                            outputList.insert(j, popped)
                             break
 
     return outputList
