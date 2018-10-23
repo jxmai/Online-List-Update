@@ -37,6 +37,9 @@ class TestTimestamp(unittest.TestCase):
     def test_timestamp_windows_3(self):
         self.assertEqual(extractTimestampWindows([1,2,4,4,5], 3), [])
 
+    def test_timestamp_windows_4(self):
+        self.assertEqual(extractTimestampWindows([1,4,2,4,5], 3), [2])
+
 
 
 if __name__== "__main__":
