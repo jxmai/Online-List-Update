@@ -7,14 +7,14 @@ from fractions import Fraction
 
 
 def main():
-    theList = random.sample(xrange(10000),1000)
+    theList = random.sample(xrange(10000),300)
     # print(theList)
     sequence = []
 
     # adversary sequence
 
     sequence = theList[::-1]
-    for i in range(100):
+    for i in range(2000):
         sequence.extend(theList[::-1])
     # print(sequence)
 
