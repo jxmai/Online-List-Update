@@ -1,12 +1,10 @@
 import random
-import unittest
 import copy
 import MTF
 import decreasingFreqList
 import Transpose
 from multiprocessing.pool import ThreadPool
 import sys
-from fractions import Fraction
 
 
 def main():
