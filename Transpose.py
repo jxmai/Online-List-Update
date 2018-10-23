@@ -1,9 +1,16 @@
 import unittest
 import copy
 
-# TODO
 def accessTranspose(sequence = [], inputList = []):
-    return None
+    outputList = copy.deepcopy(inputList)
+    
+    for s in sequence:
+        for i in range(len(outputList)):
+            if outputList[i] == s:
+                if i != 0:
+                    outputList.insert(i-1, outputList.pop(i))
+    
+    return outputList
 
 
 
