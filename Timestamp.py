@@ -5,19 +5,21 @@ import copy
 def accessTimestamp(sequence = [], inputList = []):
     outputList = copy.deepcopy(inputList)
 
+    # TOOD finish the cost calculation later
     totalCost = 0
-    for seqIndex in range(sequence):
-        for i in range(outputList):
+    for seqIndex in range(len(sequence)):
+        for i in range(len(outputList)):
             if outputList[i] == outputList[seqIndex]:
                 # access cost
                 totalCost += i + 1
                 timestampWindow = extractTimestampWindows(sequence, seqIndex)
 
-                if len(timestampWindow) > 0:
-                    # TODO
-                    pass
-
-    # TODO
+                if timestampWindow is not None:
+                    for j in range (0,i):
+                        if timestampWindow.count(outputList[j]) <= 1:
+                            popped = outputList.pop(i)
+                            outputList.insert(i, popped)
+                            break
 
     return outputList
 
@@ -48,6 +50,9 @@ class TestTimestamp(unittest.TestCase):
 
     def test_timestamp_windows_4(self):
         self.assertEqual(extractTimestampWindows([1,4,2,4,5], 3), [2])
+
+    def test_timestamp_access_1(self):
+        self.assertEqual(accessTimestamp([5], [1,2,3,4,5]), [1,2,3,4,5])
 
 
 
