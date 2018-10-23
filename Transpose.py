@@ -12,9 +12,6 @@ def accessTranspose(sequence = [], inputList = []):
     
     return outputList
 
-
-
-
 class TestTranspose(unittest.TestCase):
     def test_transpose_1(self):
         self.assertEqual(accessTranspose([5], [1,2,3,4,5]), [1,2,3,5,4])
