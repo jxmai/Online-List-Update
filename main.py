@@ -7,12 +7,15 @@ from fractions import Fraction
 
 
 def main():
-    theList = random.sample(xrange(10000),500)
+    theList = random.sample(xrange(10000),1000)
     # print(theList)
     sequence = []
 
     # adversary sequence
+
     sequence = theList[::-1]
+    for i in range(100):
+        sequence.extend(theList[::-1])
     # print(sequence)
 
     #random sequence (hide for now)
