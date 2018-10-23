@@ -9,7 +9,7 @@ def accessTimestamp(sequence = [], inputList = []):
     totalCost = 0
     for seqIndex in range(len(sequence)):
         for i in range(len(outputList)):
-            if outputList[i] == outputList[seqIndex]:
+            if outputList[i] == sequence[seqIndex]:
                 # access cost
                 totalCost += i + 1
                 timestampWindow = extractTimestampWindows(sequence, seqIndex)
