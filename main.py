@@ -29,12 +29,10 @@ def main():
     # for i in range(2000):
     #     sequence.extend(theList[::-1])
 
-
     # uniform random sequence
     # sequence = generateUniformDistributionSequence(theList, N, K)
 
     sequence = generateZipfDistribtion(theList, N, K)
-
     # print(sequence)
 
     #random sequence (hide for now)
@@ -42,8 +40,10 @@ def main():
     #     sequence.append(theList[random.randint(0,len(theList)-1)])
     # print sequence
 
-    pool = ThreadPool(processes=3)
+    costAnalysis(theList, sequence, '')
 
+def costAnalysis(theList = [], sequence = [], description = ''):
+    pool = ThreadPool(processes=3)
 
     mtf_result = pool.apply_async(MTF.moveToFront, (sequence, theList))
     fc_result = pool.apply_async(decreasingFreqList.accessDecreasingFreqList, (sequence, theList))
@@ -63,6 +63,7 @@ def main():
     print('cost ratio between MTF and FC is {0}'.format(float(mtf_cost)/ float(fc_cost)))
 
     print('cost ratio between Transpose and FC is {0}'.format(float(transpose_cost)/ float(fc_cost)))
+
 
 
 def generateUniformDistributionSequence(theList, N, K):
