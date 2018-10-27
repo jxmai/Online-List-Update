@@ -9,15 +9,24 @@ import sys
 
 def main():
     # Increase the size of the list to yield a better result (e.g. set size to 300), but it will take longer to run
-    theList = random.sample(xrange(10000),100)
+    K = 200
+    N = 200000
+    theList = random.sample(xrange(10000),K)
     # print(theList)
     sequence = []
 
     # adversary sequence
 
-    sequence = theList[::-1]
-    for i in range(2000):
-        sequence.extend(theList[::-1])
+    # sequence = theList[::-1]
+    # for i in range(2000):
+    #     sequence.extend(theList[::-1])
+
+
+    # random sequence
+    sequence = []
+    for i in range(N):
+        sequence.append(theList[random.randint(0,K-1)])
+
     # print(sequence)
 
     #random sequence (hide for now)
@@ -39,9 +48,13 @@ def main():
     fc_cost = fc_result.get()[1]
     transpose_cost = transpose_result.get()[1]
 
-    print('competitive ratio between MTF and FC is {0}'.format(float(mtf_cost)/ float(fc_cost)))
+    print('mtf cost: {0}'.format(mtf_cost))
+    print('transpose cost: {0}'.format(transpose_cost))
+    print('fc_cost cost: {0}'.format(mtf_cost))
 
-    print('competitive ratio between Transpose and FC is {0}'.format(float(mtf_cost)/ float(transpose_cost)))
+    print('cost ratio between MTF and FC is {0}'.format(float(mtf_cost)/ float(fc_cost)))
+
+    print('cost ratio between Transpose and FC is {0}'.format(float(mtf_cost)/ float(transpose_cost)))
 
 if __name__== "__main__":
     main()
