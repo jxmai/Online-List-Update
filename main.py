@@ -5,6 +5,7 @@ import decreasingFreqList
 import Transpose
 from multiprocessing.pool import ThreadPool
 import sys
+import numpy as np
 
 
 def main():
@@ -30,7 +31,9 @@ def main():
 
 
     # uniform random sequence
-    sequence = generateUniformDistributionSequence(theList, N, K)
+    # sequence = generateUniformDistributionSequence(theList, N, K)
+
+    sequence = generateZipfDistribtion(theList, N, K)
 
     # print(sequence)
 
@@ -66,6 +69,15 @@ def generateUniformDistributionSequence(theList, N, K):
     sequence = []
     for i in range(N):
         sequence.append(theList[random.randint(0,K-1)])
+    return sequence
+
+
+def generateZipfDistribtion(theList, N, K):
+    sequence = []
+    a = 2 # parameter
+    indexes = np.random.zipf(a, N)
+    indexes = list(map (lambda x: K-1 if x >= K else x, indexes))
+    sequence = list(map(lambda x : theList[x], indexes))
     return sequence
 
 
