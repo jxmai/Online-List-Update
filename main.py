@@ -3,6 +3,7 @@ import copy
 import MTF
 import decreasingFreqList
 import Transpose
+import Timestamp
 from multiprocessing.pool import ThreadPool
 import sys
 import numpy as np
@@ -39,11 +40,12 @@ def costAnalysis(theList = [], sequence = [], description = ''):
 
     print(description)
 
-    pool = ThreadPool(processes=3)
+    pool = ThreadPool(processes=4)
 
     mtf_result = pool.apply_async(MTF.moveToFront, (sequence, theList))
     fc_result = pool.apply_async(decreasingFreqList.accessDecreasingFreqList, (sequence, theList))
     transpose_result = pool.apply_async(Transpose.accessTranspose, (sequence, theList))
+    timestamp_result = pool.apply_async(Timestamp.accessTimestamp, (sequence, theList))
 
     pool.close()
     pool.join()  
@@ -51,14 +53,18 @@ def costAnalysis(theList = [], sequence = [], description = ''):
     mtf_cost = mtf_result.get()[1]
     fc_cost = fc_result.get()[1]
     transpose_cost = transpose_result.get()[1]
+    timestamp_cost = timestamp_result.get()[1]
 
     print('mtf cost: {0}'.format(mtf_cost))
     print('transpose cost: {0}'.format(transpose_cost))
     print('fc cost: {0}'.format(fc_cost))
+    print('timestamp cost: {0}'.format(timestamp_cost))
 
     print('cost ratio between MTF and FC is {0}'.format(float(mtf_cost)/ float(fc_cost)))
 
     print('cost ratio between Transpose and FC is {0}'.format(float(transpose_cost)/ float(fc_cost)))
+
+    print('cost ratio between Timestamp and FC is {0}'.format(float(timestamp_cost)/ float(fc_cost)))
 
     print('')
 
