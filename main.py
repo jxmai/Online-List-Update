@@ -29,7 +29,7 @@ def main():
     #     sequence.extend(theList[::-1])
 
 
-    # random sequence
+    # uniform random sequence
     sequence = []
     for i in range(N):
         sequence.append(theList[random.randint(0,K-1)])
