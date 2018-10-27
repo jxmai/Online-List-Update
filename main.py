@@ -30,9 +30,7 @@ def main():
 
 
     # uniform random sequence
-    sequence = []
-    for i in range(N):
-        sequence.append(theList[random.randint(0,K-1)])
+    sequence = generateUniformDistributionSequence(theList, N, K)
 
     # print(sequence)
 
@@ -62,6 +60,14 @@ def main():
     print('cost ratio between MTF and FC is {0}'.format(float(mtf_cost)/ float(fc_cost)))
 
     print('cost ratio between Transpose and FC is {0}'.format(float(mtf_cost)/ float(transpose_cost)))
+
+
+def generateUniformDistributionSequence(theList, N, K):
+    sequence = []
+    for i in range(N):
+        sequence.append(theList[random.randint(0,K-1)])
+    return sequence
+
 
 if __name__== "__main__":
     main()
