@@ -8,9 +8,16 @@ import sys
 
 
 def main():
+    try:
+        # Python 2
+        xrange
+    except NameError:
+        # Python 3, xrange is now named range
+        xrange = range
+
     # Increase the size of the list to yield a better result (e.g. set size to 300), but it will take longer to run
     K = 200
-    N = 200000
+    N = 10000
     theList = random.sample(xrange(10000),K)
     # print(theList)
     sequence = []
