@@ -24,7 +24,6 @@ def main():
     sequence = []
 
     # adversary sequence
-
     # sequence = theList[::-1]
     # for i in range(2000):
     #     sequence.extend(theList[::-1])
@@ -35,12 +34,9 @@ def main():
     sequence = generateZipfDistribtion(theList, N, K)
     # print(sequence)
 
-    #random sequence (hide for now)
-    # for i in range(100):
-    #     sequence.append(theList[random.randint(0,len(theList)-1)])
-    # print sequence
+    costAnalysis(theList, sequence, 'zipf distribution random sequence')
 
-    costAnalysis(theList, sequence, '')
+
 
 def costAnalysis(theList = [], sequence = [], description = ''):
     pool = ThreadPool(processes=3)
@@ -63,7 +59,6 @@ def costAnalysis(theList = [], sequence = [], description = ''):
     print('cost ratio between MTF and FC is {0}'.format(float(mtf_cost)/ float(fc_cost)))
 
     print('cost ratio between Transpose and FC is {0}'.format(float(transpose_cost)/ float(fc_cost)))
-
 
 
 def generateUniformDistributionSequence(theList, N, K):
