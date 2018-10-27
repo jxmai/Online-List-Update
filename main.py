@@ -62,7 +62,7 @@ def main():
 
     print('cost ratio between MTF and FC is {0}'.format(float(mtf_cost)/ float(fc_cost)))
 
-    print('cost ratio between Transpose and FC is {0}'.format(float(mtf_cost)/ float(transpose_cost)))
+    print('cost ratio between Transpose and FC is {0}'.format(float(transpose_cost)/ float(fc_cost)))
 
 
 def generateUniformDistributionSequence(theList, N, K):
