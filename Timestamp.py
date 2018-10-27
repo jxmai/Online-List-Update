@@ -26,13 +26,11 @@ def accessTimestamp(sequence = [], inputList = []):
 
 def extractTimestampWindows(sequence = [], accessIndex = 0):
     timestampWindow = None
-    foundPreviousAccess = False
 
     currIndex = accessIndex - 1
 
     while currIndex >= 0:
         if sequence[currIndex] == sequence[accessIndex]:
-            foundPreviousAccess = True
             timestampWindow = sequence[currIndex + 1 : accessIndex]
             break
         currIndex -= 1
