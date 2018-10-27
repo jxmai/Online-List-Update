@@ -57,7 +57,7 @@ def main():
 
     print('mtf cost: {0}'.format(mtf_cost))
     print('transpose cost: {0}'.format(transpose_cost))
-    print('fc_cost cost: {0}'.format(mtf_cost))
+    print('fc cost: {0}'.format(fc_cost))
 
     print('cost ratio between MTF and FC is {0}'.format(float(mtf_cost)/ float(fc_cost)))
 
