@@ -58,8 +58,14 @@ def costAnalysis(theList = [], sequence = [], description = ''):
     timestamp_cost = timestamp_result.get()[1]
 
     print('mtf cost: {0}'.format(mtf_cost))
-    # plt.plot(range(len(sequence)), mtf_result.get()[2], 'ro')
-    # plt.show()
+
+
+    # visualization needs to be improved further
+    plt.plot(range(len(sequence)), mtf_result.get()[2], 'ro')
+    plt.plot(range(len(sequence)), fc_result.get()[2], 'bo')
+    plt.plot(range(len(sequence)), transpose_result.get()[2], 'go')
+    plt.plot(range(len(sequence)), timestamp_result.get()[2], 'yo')
+    plt.show()
 
 
     print('transpose cost: {0}'.format(transpose_cost))
