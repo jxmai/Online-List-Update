@@ -7,6 +7,8 @@ import Timestamp
 from multiprocessing.pool import ThreadPool
 import sys
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -56,6 +58,10 @@ def costAnalysis(theList = [], sequence = [], description = ''):
     timestamp_cost = timestamp_result.get()[1]
 
     print('mtf cost: {0}'.format(mtf_cost))
+    # plt.plot(range(len(sequence)), mtf_result.get()[2], 'ro')
+    # plt.show()
+
+
     print('transpose cost: {0}'.format(transpose_cost))
     print('fc cost: {0}'.format(fc_cost))
     print('timestamp cost: {0}'.format(timestamp_cost))
