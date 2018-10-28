@@ -1,14 +1,9 @@
-import random
 import unittest
-import copy
-# import matplotlib.pyplot as plt
-# import numpy as np
-# import math
 
 # Assume no free exchanges
 def moveToFront(sequence = [], inputList = []):
     totalCost = 0
-    outputList = copy.deepcopy(inputList)
+    outputList = inputList[:]
     for s in sequence:
         item_index = outputList.index(s)
         totalCost += (2 * item_index) + 1

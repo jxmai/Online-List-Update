@@ -1,9 +1,7 @@
-import copy
-
 # Assume no free exchanges
 def move_by_bit(sequence = [], inputList = []):
     totalCost = 0
-    outputList = copy.deepcopy(inputList)
+    outputList = inputList[:]
     bitList = [0] * len(inputList)
     for s in sequence:
         item_index = outputList.index(s)

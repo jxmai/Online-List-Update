@@ -5,6 +5,7 @@ import decreasingFreqList
 import Transpose
 import Timestamp
 import Move_by_bit
+import Static_opt
 from multiprocessing.pool import ThreadPool
 import sys
 import numpy as np
@@ -42,13 +43,14 @@ def costAnalysis(theList = [], sequence = [], description = ''):
 
     print(description)
 
-    pool = ThreadPool(processes=4)
+    pool = ThreadPool(processes=6)
 
     mtf_result = pool.apply_async(MTF.moveToFront, (sequence, theList))
     fc_result = pool.apply_async(decreasingFreqList.accessDecreasingFreqList, (sequence, theList))
     transpose_result = pool.apply_async(Transpose.accessTranspose, (sequence, theList))
     timestamp_result = pool.apply_async(Timestamp.accessTimestamp, (sequence, theList))
     move_by_bit_result = pool.apply_async(Move_by_bit.move_by_bit, (sequence, theList))
+    static_opt_result = pool.apply_async(Static_opt.static_opt, (sequence, theList))
 
     pool.close()
     pool.join()
@@ -58,17 +60,25 @@ def costAnalysis(theList = [], sequence = [], description = ''):
     transpose_cost = transpose_result.get()[1]
     timestamp_cost = timestamp_result.get()[1]
     move_by_bit_cost = move_by_bit_result.get()[1]
+    static_opt_cost = static_opt_result.get()[1]
+
 
     print('mtf cost: {0}'.format(mtf_cost))
     print('transpose cost: {0}'.format(transpose_cost))
     print('fc cost: {0}'.format(fc_cost))
     print('timestamp cost: {0}'.format(timestamp_cost))
     print('move by bit cost: {0}'.format(move_by_bit_cost))
+    print('static opt cost: {0}'.format(static_opt_cost))
 
     print('cost ratio between MTF and FC is {0}'.format(float(mtf_cost)/ float(fc_cost)))
     print('cost ratio between Transpose and FC is {0}'.format(float(transpose_cost)/ float(fc_cost)))
     print('cost ratio between Timestamp and FC is {0}'.format(float(timestamp_cost)/ float(fc_cost)))
 
+    print('\nStatic Opt')
+    print('cost ratio MTF {0}'.format(float(mtf_cost)/float(static_opt_cost)))
+    print('cost ratio Transpose {0}'.format(float(transpose_cost)/float(static_opt_cost)))
+    print('cost ratio Timestamp {0}'.format(float(timestamp_cost)/float(static_opt_cost)))
+    print('cost ratio Move bit bit {0}'.format(float(move_by_bit_cost)/float(static_opt_cost)))
     print()
 
 
