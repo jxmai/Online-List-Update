@@ -9,12 +9,10 @@ import copy
 def moveToFront(sequence = [], inputList = []):
     totalCost = 0
     outputList = copy.deepcopy(inputList)
-
     for s in sequence:
-        for i in range(len(outputList)):
-            if(outputList[i] == s):
-                totalCost += 2 * i + 1
-                outputList.insert(0, outputList.pop(i))
+        item_index = outputList.index(s)
+        totalCost += (2 * item_index) + 1
+        outputList.insert(0, outputList.pop(item_index))
     return outputList, totalCost
 
 class TestMTF(unittest.TestCase):

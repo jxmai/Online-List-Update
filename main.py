@@ -20,8 +20,9 @@ def main():
     # Increase the size of the list to yield a better result (e.g. set size to 300), but it will take longer to run
     K = 200
     N = 10000
-    theList = random.sample(xrange(10000),K)
-    # print(theList)
+    # populate initial random list
+    theList = [i for i in range(K)]
+    random.shuffle(theList)
 
     # adversary sequence
     # sequence = theList[::-1]
@@ -30,7 +31,7 @@ def main():
 
     # print(sequence)
 
-    costAnalysis(theList, generateZipfDistribtion(theList, N, K), 'zipf distribution random sequence')
+    #costAnalysis(theList, generateZipfDistribtion(theList, N, K), 'zipf distribution random sequence')
 
     costAnalysis(theList, generateUniformDistributionSequence(theList, N, K), 'uniform distribution random sequence')
 
@@ -70,18 +71,15 @@ def costAnalysis(theList = [], sequence = [], description = ''):
 
 
 def generateUniformDistributionSequence(theList, N, K):
-    sequence = []
-    for i in range(N):
-        sequence.append(theList[random.randint(0,K-1)])
-    return sequence
+    return [random.randrange(K) for i in range(N)]
 
 
 def generateZipfDistribtion(theList, N, K):
     sequence = []
     a = 2 # parameter
     indexes = np.random.zipf(a, N)
-    indexes = list(map (lambda x: K-1 if x >= K else x, indexes))
-    sequence = list(map(lambda x : theList[x], indexes))
+    indexes = list(map(lambda x: K-1 if x >= K else x, indexes))
+    sequence = list(map(lambda x: theList[x], indexes))
     return sequence
 
 
