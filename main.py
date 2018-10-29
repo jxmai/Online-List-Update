@@ -9,6 +9,8 @@ import Static_opt
 from multiprocessing.pool import ThreadPool
 import sys
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -64,6 +66,16 @@ def costAnalysis(theList = [], sequence = [], description = ''):
 
 
     print('mtf cost: {0}'.format(mtf_cost))
+
+
+    # visualization needs to be improved further
+    plt.plot(range(len(sequence)), mtf_result.get()[2], 'ro')
+    plt.plot(range(len(sequence)), fc_result.get()[2], 'bo')
+    plt.plot(range(len(sequence)), transpose_result.get()[2], 'go')
+    plt.plot(range(len(sequence)), timestamp_result.get()[2], 'yo')
+    plt.show()
+
+
     print('transpose cost: {0}'.format(transpose_cost))
     print('fc cost: {0}'.format(fc_cost))
     print('timestamp cost: {0}'.format(timestamp_cost))
