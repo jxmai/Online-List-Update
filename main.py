@@ -23,9 +23,10 @@ def main():
     #     sequence.extend(initial_list[::-1])
     # print(sequence)
 
-    # cost_analysis(initial_list, generateZipfDistribtion(initial_list, N, K), 'zipf distribution random sequence')
-    cost_analysis(initial_list, generateUniformDistributionSequence(initial_list, N, K),
-                  'uniform distribution random sequence')
+    cost_analysis(initial_list, gen_uni_dist(N, K), 'Uniform distribution')
+    cost_analysis(initial_list, gen_normal_dist(N, K), 'Normal distribution')
+    cost_analysis(initial_list, gen_logistic_dist(N, K), 'Logistic distribution')
+    cost_analysis(initial_list, gen_zipf_dist(initial_list, N, K), 'Zipf distribution')
 
 
 def cost_analysis(initial_list, sequence, description):
@@ -52,7 +53,10 @@ def cost_analysis(initial_list, sequence, description):
             print(
                 "Cost of {0} is {1}".format(a.__name__[5:], float(results[a].get()[1]) / results[static_opt].get()[1]))
 
-    # visualization needs to be improved further
+    # draw plot for current graph
+    plt.figure(num=description)
+    plt.xlabel("Sequence length")
+    plt.ylabel("Total cost")
     for a in list_alg:
         if a is not static_opt:
             plt.plot(range(len(sequence)), results[a].get()[2], label=a.__name__[5:])
@@ -62,11 +66,29 @@ def cost_analysis(initial_list, sequence, description):
     plt.show()
 
 
-def generateUniformDistributionSequence(initial_list, N, K):
-    return [random.randrange(K) for i in range(N)]
+def gen_uni_dist(N, K):
+    return list(np.random.randint(0, K, N))
 
 
-def generateZipfDistribtion(initial_list, N, K):
+def gen_normal_dist(N, K):
+    dist = np.random.normal(K / 2, K / 4, N)
+    dist = list(dist)
+    for i in range(len(dist)):
+        dist[i] = max(0, round(dist[i]))
+        dist[i] = min(round(dist[i]), K - 1)
+    return dist
+
+
+def gen_logistic_dist(N, K):
+    dist = np.random.logistic(K / 2, K / 4, N)
+    dist = list(dist)
+    for i in range(len(dist)):
+        dist[i] = max(0, round(dist[i]))
+        dist[i] = min(round(dist[i]), K - 1)
+    return dist
+
+
+def gen_zipf_dist(initial_list, N, K):
     a = 2   # parameter
     indexes = np.random.zipf(a, N)
     indexes = list(map(lambda x: K-1 if x >= K else x, indexes))
@@ -74,5 +96,5 @@ def generateZipfDistribtion(initial_list, N, K):
     return sequence
 
 
-if __name__== "__main__":
+if __name__ == "__main__":
     main()
