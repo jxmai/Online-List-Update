@@ -68,13 +68,14 @@ def costAnalysis(theList = [], sequence = [], description = ''):
 
 
     # visualization needs to be improved further
-    plt.plot(range(len(sequence)), mtf_result.get()[2])
-    plt.plot(range(len(sequence)), fc_result.get()[2])
-    plt.plot(range(len(sequence)), transpose_result.get()[2])
-    plt.plot(range(len(sequence)), timestamp_result.get()[2])
-    plt.plot(range(len(sequence)), move_by_bit_result.get()[2])
+    plt.plot(range(len(sequence)), mtf_result.get()[2], label='MTF')
+    plt.plot(range(len(sequence)), fc_result.get()[2], label='FC')
+    plt.plot(range(len(sequence)), transpose_result.get()[2], label='Transpose')
+    plt.plot(range(len(sequence)), timestamp_result.get()[2], label='Timestamp')
+    plt.plot(range(len(sequence)), move_by_bit_result.get()[2], label='Move-By-Bit')
     # static opt requires plus 1 as it does is initial placing
-    plt.plot(range(len(sequence)+1), static_opt_result.get()[2])
+    plt.plot(range(len(sequence)+1), static_opt_result.get()[2],label='Static Opt')
+    plt.legend()
     plt.show()
 
 
