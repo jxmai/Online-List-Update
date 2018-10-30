@@ -31,11 +31,11 @@ def static_opt(sequence = [], inputList = []):
 
 class Test_Static_OPT(unittest.TestCase):
 
-    def test_MTF_1(self):
+    def test_Static_OPT_1(self):
         self.assertEqual(static_opt([1],[5,4,3,2,1])[0], [1,5,4,3,2])
         self.assertEqual(static_opt([1],[5,4,3,2,1])[1], 5)
 
-    def test_MTF_2(self):
+    def test_Static_OPT_2(self):
         self.assertEqual(static_opt([1,1],[5,4,3,2,1])[0], [1,5,4,3,2])
         self.assertEqual(static_opt([1,1],[5,4,3,2,1])[1], 4+1+1)  # switch cost + access cost + access cost
         self.assertEqual(static_opt([1,1],[5,4,3,2,1])[2], [4, 5, 6])
