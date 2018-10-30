@@ -1,22 +1,16 @@
-import random
 import unittest
-import copy
-# import matplotlib.pyplot as plt
-# import numpy as np
-# import math
 
 # Assume no free exchanges
 def moveToFront(sequence = [], inputList = []):
     totalCost = 0
-    totalCostsForEachAccessList = [] 
-    outputList = copy.deepcopy(inputList)
+    totalCostsForEachAccessList = []
+    outputList = inputList[:]
 
     for s in sequence:
-        for i in range(len(outputList)):
-            if(outputList[i] == s):
-                totalCost += 2 * i + 1
-                totalCostsForEachAccessList.append(totalCost)
-                outputList.insert(0, outputList.pop(i))
+        item_index = outputList.index(s)
+        totalCost += (2 * item_index) + 1
+        totalCostsForEachAccessList.append(totalCost)
+        outputList.insert(0, outputList.pop(item_index))
     return outputList, totalCost, totalCostsForEachAccessList
 
 class TestMTF(unittest.TestCase):
