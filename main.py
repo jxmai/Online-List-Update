@@ -1,5 +1,4 @@
 import random
-import copy
 import MTF
 import decreasingFreqList
 import Transpose
@@ -35,7 +34,7 @@ def main():
 
     # print(sequence)
 
-    #costAnalysis(theList, generateZipfDistribtion(theList, N, K), 'zipf distribution random sequence')
+    costAnalysis(theList, generateZipfDistribtion(theList, N, K), 'zipf distribution random sequence')
 
     costAnalysis(theList, generateUniformDistributionSequence(theList, N, K), 'uniform distribution random sequence')
 
@@ -69,10 +68,13 @@ def costAnalysis(theList = [], sequence = [], description = ''):
 
 
     # visualization needs to be improved further
-    plt.plot(range(len(sequence)), mtf_result.get()[2], 'ro')
-    plt.plot(range(len(sequence)), fc_result.get()[2], 'bo')
-    plt.plot(range(len(sequence)), transpose_result.get()[2], 'go')
-    plt.plot(range(len(sequence)), timestamp_result.get()[2], 'yo')
+    plt.plot(range(len(sequence)), mtf_result.get()[2])
+    plt.plot(range(len(sequence)), fc_result.get()[2])
+    plt.plot(range(len(sequence)), transpose_result.get()[2])
+    plt.plot(range(len(sequence)), timestamp_result.get()[2])
+    plt.plot(range(len(sequence)), move_by_bit_result.get()[2])
+    # static opt requires plus 1 as it does is initial placing
+    plt.plot(range(len(sequence)+1), static_opt_result.get()[2])
     plt.show()
 
 
@@ -88,9 +90,10 @@ def costAnalysis(theList = [], sequence = [], description = ''):
 
     print('\nStatic Opt')
     print('cost ratio MTF {0}'.format(float(mtf_cost)/float(static_opt_cost)))
+    print('cost ratio FC {0}'.format(float(fc_cost)/float(static_opt_cost)))
     print('cost ratio Transpose {0}'.format(float(transpose_cost)/float(static_opt_cost)))
     print('cost ratio Timestamp {0}'.format(float(timestamp_cost)/float(static_opt_cost)))
-    print('cost ratio Move bit bit {0}'.format(float(move_by_bit_cost)/float(static_opt_cost)))
+    print('cost ratio Move by bit {0}'.format(float(move_by_bit_cost)/float(static_opt_cost)))
     print()
 
 
@@ -99,8 +102,7 @@ def generateUniformDistributionSequence(theList, N, K):
 
 
 def generateZipfDistribtion(theList, N, K):
-    sequence = []
-    a = 2 # parameter
+    a = 2   # parameter
     indexes = np.random.zipf(a, N)
     indexes = list(map(lambda x: K-1 if x >= K else x, indexes))
     sequence = list(map(lambda x: theList[x], indexes))
