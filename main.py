@@ -10,8 +10,8 @@ from algs import move_to_front, frequency_count, move_by_bit, static_opt, timest
 
 def main():
     # Increase the size of the list to yield a better result (e.g. set size to 300), but it will take longer to run
-    K = 200
-    N = 100  # 10000
+    K = 50
+    N = 1000  # 10000
 
     # populate initial random list
     initial_list = [i for i in range(K)]
