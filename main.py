@@ -1,3 +1,4 @@
+import os
 import random
 import re
 from multiprocessing.pool import ThreadPool
@@ -31,7 +32,7 @@ def main():
 
     files = ["alice29.txt", "pi.txt"]  # "bible.txt
     for file in files:
-        initial_list, sequence = gen_seq_file("datasets\\" + file)
+        initial_list, sequence = gen_seq_file(os.path.join("datasets", file))
         cost_analysis(initial_list, sequence, "\n\nData from " + file)
 
 
