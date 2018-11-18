@@ -1,4 +1,6 @@
+import os
 import random
+import re
 from multiprocessing.pool import ThreadPool
 
 import matplotlib.pyplot as plt
@@ -27,6 +29,11 @@ def main():
     cost_analysis(initial_list, gen_normal_dist(N, K), 'Normal distribution')
     cost_analysis(initial_list, gen_logistic_dist(N, K), 'Logistic distribution')
     cost_analysis(initial_list, gen_zipf_dist(initial_list, N, K), 'Zipf distribution')
+
+    files = ["alice29.txt", "pi.txt"]  # "bible.txt
+    for file in files:
+        initial_list, sequence = gen_seq_file(os.path.join("datasets", file))
+        cost_analysis(initial_list, sequence, "\n\nData from " + file)
 
 
 def cost_analysis(initial_list, sequence, description):
@@ -94,6 +101,25 @@ def gen_zipf_dist(initial_list, N, K):
     indexes = list(map(lambda x: K-1 if x >= K else x, indexes))
     sequence = list(map(lambda x: initial_list[x], indexes))
     return sequence
+
+
+def gen_seq_file(file_name):
+    f = open(file_name, 'r')
+    text = f.read()
+    # remove all the whitespace
+    text = re.sub(r"\s", "", text).lower()
+    # find all the unique letters
+    unique_letters = list(set(text))
+    # map all unique letters to a unique number
+    all_mappings = {unique_letters[i]: i for i in range(len(unique_letters))}
+    # map all letters to there symbols
+    sequence = [all_mappings[l] for l in text]
+
+    # create initial list depending on the number of unique letters
+    initial_list = [i for i in range(len(unique_letters))]
+    random.shuffle(initial_list)
+
+    return initial_list, sequence
 
 
 if __name__ == "__main__":
