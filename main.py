@@ -2,28 +2,80 @@ import os
 import random
 import re
 from multiprocessing.pool import ThreadPool
+import math
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 # Different list algorithms
-from algs import move_to_front, frequency_count, move_by_bit, static_opt, timestamp, transpose
+from algs import move_to_front, frequency_count, move_by_bit, static_opt, timestamp, transpose, opt
 
 
 def main():
-    list_alg = [move_to_front, frequency_count, transpose, timestamp, move_by_bit, static_opt]
+    list_alg = [move_to_front, frequency_count, transpose,
+                timestamp, move_by_bit, static_opt, opt]
     name_alg = [a.__name__[5:] for a in list_alg]
+    short_names = ['mtf', 'fc', 'trans', 'ts', 'mbb', 'opt']
     # remove the name opt as we don't want that on plot
     name_alg.pop(list_alg.index(static_opt))
 
-    analyze_dist(list_alg, name_alg)
-    analyze_context(list_alg, name_alg)
+    analyze_worst_case(10, 3000)
+    analyze_dist(list_alg, name_alg, short_names)
+    analyze_context(list_alg, name_alg, short_names)
+
+    plt.show()
 
 
-def analyze_dist(list_alg, name_alg):
+def analyze_worst_case(K, N):
+
+    # populate initial random list
+    initial_list = [i for i in range(K)]
+    list_alg = [move_to_front, frequency_count, transpose, timestamp, move_by_bit]
+    name_alg = [a.__name__[5:] for a in list_alg]
+    short_names = ['mtf', 'fc', 'trans', 'ts', 'mbb']
+
+    mtf_ts = initial_list[::-1]
+    trans = [initial_list[-1], initial_list[-2]]
+    mbb = initial_list[:]
+    for i in initial_list:
+        mbb.append(i)
+        mbb.append(i)
+        mbb.append(i)
+    mbb.extend(initial_list[::-1])
+    for i in initial_list[::-1]:
+        mbb.append(i)
+        mbb.append(i)
+        mbb.append(i)
+    fc = []
+    for i in initial_list:
+        fc.extend([i]*10)
+
+    sequences = [mtf_ts, fc, trans, mtf_ts, mbb]
+    cr = []
+
+    for i, a in enumerate(list_alg):
+        cost_alg = {a: [], opt: [], static_opt: []}
+        seq = replicate_seq(sequences[i], K, N)
+        # move by bit requires initial setup before repeating sequence
+        if a is move_by_bit:
+            seq = initial_list + seq
+            seq = seq[:N]
+        simulate_seq(initial_list, seq, [opt, a], cost_alg)
+        cr.append((cost_alg[a][0] - N)/(cost_alg[opt][0] - N))
+    short_names = ['dcba', 'a^10b^10c^10d^10', 'dc', 'dcba', 'abaaabbbbabbbaaa']
+    plot_data(["Worst cases"], name_alg, short_names, cr, False)
+
+
+def replicate_seq(seq, K, N):
+    # print(K, N, math.ceil(N/float(len(seq))))
+    c_seq = seq * math.ceil(N/float(len(seq)))
+    return c_seq[:N]
+
+
+def analyze_dist(list_alg, name_alg, short_names):
     # Increase the size of the list to yield a better result
     # (e.g. set size to 300), but it will take longer to run
-    K = 50;
+    K = 50
     N = 1000  # 10000
 
     # populate initial random list
@@ -31,7 +83,8 @@ def analyze_dist(list_alg, name_alg):
     random.shuffle(initial_list)
 
     dist = ['Uniform dist', 'Normal dist', 'Logistic dist', 'Zipf dist']
-    sequences = [gen_uni_dist(N, K), gen_normal_dist(N, K), gen_logistic_dist(N, K), gen_zipf_dist(initial_list, N, K)]
+    sequences = [gen_uni_dist(N, K), gen_normal_dist(
+        N, K), gen_logistic_dist(N, K), gen_zipf_dist(initial_list, N, K)]
     cost_alg = {a: [] for a in list_alg}
 
     for d in sequences:
@@ -40,10 +93,10 @@ def analyze_dist(list_alg, name_alg):
     # find competitive ratio for all the algorithms except static opt
     cr = find_cr(list_alg, len(dist), cost_alg)
     # plot the results
-    plot_data(dist, name_alg, cr)
+    plot_data(dist, name_alg, short_names, cr, True)
 
 
-def analyze_context(list_alg, name_alg):
+def analyze_context(list_alg, name_alg, short_names):
     files = ["alice29.txt", "pi.txt"]  # "bible.txt
     cost_alg = {a: [] for a in list_alg}
 
@@ -54,27 +107,49 @@ def analyze_context(list_alg, name_alg):
     # find competitive ratio for all the algorithms except static opt
     cr = find_cr(list_alg, len(files), cost_alg)
     # plot the results
-    plot_data(files, name_alg, cr)
+    plot_data(files, name_alg, short_names, cr, True)
 
 
-def plot_data(x_labels, name_alg, cr):
+def plot_data(x_labels, name_alg, short_names, cr, limit):
     fig = plt.figure()
     ax = fig.add_subplot(111)
 
     # necessary variables
     ind = np.arange(len(x_labels))  # the x locations for the groups
     width = 0.12  # the width of the bars
+    rects = None
     for i, a in enumerate(cr):
-        ax.bar(ind + (width * i), a, width)
+        if rects == None:
+            rects = ax.bar(ind + (width * i), a, width)
+        else:
+            rects += ax.bar(ind + (width * i), a, width)
+        # Add counts above the two bar graphs
+
+    for rect in rects:
+        height = rect.get_height()
+        plt.text(rect.get_x() + rect.get_width()/2.0, height,
+                 '%0.2f' % (height), ha='center', va='bottom')
+
+    i = 0
+    j = 0
+    for rect in rects:
+        if i == len(x_labels):
+            i = 0
+            j += 1
+        height = rect.get_height()
+        plt.text(rect.get_x() + rect.get_width()/2.0, height/1.3,
+                 '%s' % short_names[j], ha='center', va='top')
+        i += 1
 
     # axes and labels
-    ax.set_ylim(0.5, 3)
+    if limit:
+        ax.set_ylim(0.5, 3)
     ax.set_ylabel('Average cost ratio')
     ax.set_title('Average cost ratio of List update algorithms')
     ax.set_xticks(ind + width)
     plt.setp(ax.set_xticklabels(x_labels), fontsize=10)
     ax.legend(name_alg)
-    plt.show()
+    # plt.show()
 
 
 def simulate_seq(initial_list, sequence, list_alg, cost_alg):
@@ -82,7 +157,8 @@ def simulate_seq(initial_list, sequence, list_alg, cost_alg):
     pool = ThreadPool(processes=len(list_alg))
     for a in list_alg:
         # simulate an algorithm on a thread
-        cost = pool.apply_async(a.serve_accesses, (sequence, initial_list[:])).get()
+        cost = pool.apply_async(
+            a.serve_accesses, (sequence, initial_list[:])).get()
         cost_alg[a].append(cost[1])
     pool.close()
     pool.join()
