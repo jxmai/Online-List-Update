@@ -17,6 +17,7 @@ def serve_accesses(sequence, working_list):
             working_list.insert(0, working_list.pop(item_index))
             bit_list.insert(0, bit_list.pop(item_index))
         total_cost_tracker.append(total_cost)
+    # print(total_cost_tracker)
     return working_list, total_cost, total_cost_tracker
 
 
@@ -31,6 +32,18 @@ class MoveByBitTest(unittest.TestCase):
         self.assertEqual(serve_accesses([1, 1], [5, 4, 3, 2, 1])[1],
                          5 + 5 + 4)  # access cost + access cost + switch cost
         self.assertEqual(serve_accesses([1, 1], [5, 4, 3, 2, 1])[2], [5, 14])
+
+    def test_MTF_3(self):
+        self.assertEqual(serve_accesses([2, 2], [5, 4, 3, 2, 1])[0], [2, 5, 4, 3, 1])
+        self.assertEqual(serve_accesses([2, 2], [5, 4, 3, 2, 1])[1],
+                         4 + 4 + 3)  # access cost + access cost + switch cost
+
+    def test_MTF_4(self):
+        self.assertEqual(serve_accesses([2, 1, 2, 4, 1], [5, 4, 3, 2, 1])[0], [1, 2, 5, 4, 3])
+        self.assertEqual(serve_accesses([2, 1, 2, 4, 1], [5, 4, 3, 2, 1])[1],
+                         4 + 5 + 4 + 3 + 3 + 5 + 4)
+
+
 
 
 if __name__ == "__main__":
