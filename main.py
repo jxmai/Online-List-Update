@@ -69,8 +69,8 @@ def plot_data(x_labels, name_alg, cr):
 
     # axes and labels
     ax.set_ylim(0.5, 3)
-    ax.set_ylabel('Competitive ratio')
-    ax.set_title('Competitive ratio of List update algorithms')
+    ax.set_ylabel('Average cost ratio')
+    ax.set_title('Average cost ratio of List update algorithms')
     ax.set_xticks(ind + width)
     plt.setp(ax.set_xticklabels(x_labels), fontsize=10)
     ax.legend(name_alg)
