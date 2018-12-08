@@ -1,8 +1,8 @@
+import math
 import os
 import random
 import re
 from multiprocessing.pool import ThreadPool
-import math
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -15,7 +15,8 @@ def main():
     list_alg = [move_to_front, frequency_count, transpose,
                 timestamp, move_by_bit, static_opt, opt]
     name_alg = [a.__name__[5:] for a in list_alg]
-    short_names = ['mtf', 'fc', 'trans', 'ts', 'mbb', 'opt']
+    name_alg[-1] = "approx_opt"
+    short_names = ['mtf', 'fc', 'trans', 'ts', 'mbb', 'approx_opt']
     # remove the name opt as we don't want that on plot
     name_alg.pop(list_alg.index(static_opt))
 
@@ -63,7 +64,8 @@ def analyze_worst_case(K, N):
         simulate_seq(initial_list, seq, [opt, a], cost_alg)
         cr.append((cost_alg[a][0] - N)/(cost_alg[opt][0] - N))
     short_names = ['dcba', 'a^10b^10c^10d^10', 'dc', 'dcba', 'abaaabbbbabbbaaa']
-    plot_data(["Worst cases"], name_alg, short_names, cr, False)
+    plot_data(["Worst cases"], name_alg, short_names, cr, False, 'Worst-case cost ratio',
+              'Worst-cases compared to approx opt')
 
 
 def replicate_seq(seq, K, N):
@@ -93,11 +95,12 @@ def analyze_dist(list_alg, name_alg, short_names):
     # find competitive ratio for all the algorithms except static opt
     cr = find_cr(list_alg, len(dist), cost_alg)
     # plot the results
-    plot_data(dist, name_alg, short_names, cr, True)
+    plot_data(dist, name_alg, short_names, cr, True, 'Average cost ratio',
+              'Average cost ratio on distributions compared to static opt')
 
 
 def analyze_context(list_alg, name_alg, short_names):
-    files = ["alice29.txt", "pi.txt"]  # "bible.txt
+    files = ["alice29.txt", "pi.txt", "bible.txt"]
     cost_alg = {a: [] for a in list_alg}
 
     for file in files:
@@ -107,10 +110,12 @@ def analyze_context(list_alg, name_alg, short_names):
     # find competitive ratio for all the algorithms except static opt
     cr = find_cr(list_alg, len(files), cost_alg)
     # plot the results
-    plot_data(files, name_alg, short_names, cr, True)
+
+    plot_data(files, name_alg, short_names, cr, True, 'Average cost ratio',
+              'Average cost ratio on data sets with context compared to static opt')
 
 
-def plot_data(x_labels, name_alg, short_names, cr, limit):
+def plot_data(x_labels, name_alg, short_names, cr, limit, ylabel, title):
     fig = plt.figure()
     ax = fig.add_subplot(111)
 
@@ -144,8 +149,8 @@ def plot_data(x_labels, name_alg, short_names, cr, limit):
     # axes and labels
     if limit:
         ax.set_ylim(0.5, 3)
-    ax.set_ylabel('Average cost ratio')
-    ax.set_title('Average cost ratio of List update algorithms')
+    ax.set_ylabel(ylabel)
+    ax.set_title(title)
     ax.set_xticks(ind + width)
     plt.setp(ax.set_xticklabels(x_labels), fontsize=10)
     ax.legend(name_alg)
