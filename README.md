@@ -16,7 +16,7 @@ python3 main.py
 
 (Keep in mind that please make sure to have python3 installed since some of the implementation is not compatible with python2)
 
-Coding standards:  
+## Coding standards:  
 * Short variable names  
 * Variable name: uses '_' to separate words (output_list)  
 * Functions name same as variable name  
