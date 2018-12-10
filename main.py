@@ -6,7 +6,6 @@ from multiprocessing.pool import ThreadPool
 
 import matplotlib.pyplot as plt
 import numpy as np
-
 # Different list algorithms
 from algs import move_to_front, frequency_count, move_by_bit, static_opt, timestamp, transpose, opt
 
@@ -15,8 +14,8 @@ def main():
     list_alg = [move_to_front, frequency_count, transpose,
                 timestamp, move_by_bit, static_opt, opt]
     name_alg = [a.__name__[5:] for a in list_alg]
-    name_alg[-1] = "approx_opt"
-    short_names = ['mtf', 'fc', 'trans', 'ts', 'mbb', 'approx_opt']
+    name_alg[-1] = "approx_off"
+    short_names = ['mtf', 'fc', 'trans', 'ts', 'mbb', 'approx_off']
     # remove the name opt as we don't want that on plot
     name_alg.pop(list_alg.index(static_opt))
 
@@ -54,6 +53,9 @@ def analyze_worst_case(K, N):
     sequences = [mtf_ts, fc, trans, mtf_ts, mbb]
     cr = []
 
+    print()
+    print("Worst Case")
+
     for i, a in enumerate(list_alg):
         cost_alg = {a: [], opt: [], static_opt: []}
         seq = replicate_seq(sequences[i], K, N)
@@ -62,10 +64,11 @@ def analyze_worst_case(K, N):
             seq = initial_list + seq
             seq = seq[:N]
         simulate_seq(initial_list, seq, [opt, a], cost_alg)
+        print(a.__name__[5:], cost_alg[a][0] - N, cost_alg[opt][0] - N)
         cr.append((cost_alg[a][0] - N)/(cost_alg[opt][0] - N))
     short_names = ['dcba', 'a^10b^10c^10d^10', 'dc', 'dcba', 'abaaabbbbabbbaaa']
     plot_data(["Worst cases"], name_alg, short_names, cr, False, 'Worst-case cost ratio',
-              'Worst-cases compared to approx opt')
+              'Worst-cases compared to approx off')
 
 
 def replicate_seq(seq, K, N):
@@ -77,8 +80,11 @@ def replicate_seq(seq, K, N):
 def analyze_dist(list_alg, name_alg, short_names):
     # Increase the size of the list to yield a better result
     # (e.g. set size to 300), but it will take longer to run
-    K = 50
-    N = 1000  # 10000
+    # K = 50
+    # N = 1000  # 10000
+
+    K = 500
+    N = 10000
 
     # populate initial random list
     initial_list = [i for i in range(K)]
@@ -92,6 +98,11 @@ def analyze_dist(list_alg, name_alg, short_names):
     for d in sequences:
         simulate_seq(initial_list, d, list_alg, cost_alg)
 
+    print()
+    print("Distribution")
+    for a in list_alg:
+        print(a.__name__[5:], cost_alg[a])
+
     # find competitive ratio for all the algorithms except static opt
     cr = find_cr(list_alg, len(dist), cost_alg)
     # plot the results
@@ -100,6 +111,7 @@ def analyze_dist(list_alg, name_alg, short_names):
 
 
 def analyze_context(list_alg, name_alg, short_names):
+    # files = ["alice29.txt", "pi.txt"]#, "bible.txt"]
     files = ["alice29.txt", "pi.txt", "bible.txt"]
     cost_alg = {a: [] for a in list_alg}
 
@@ -107,6 +119,10 @@ def analyze_context(list_alg, name_alg, short_names):
         initial_list, sequence = gen_seq_file(os.path.join("datasets", file))
         simulate_seq(initial_list, sequence, list_alg, cost_alg)
 
+    print()
+    print("Context")
+    for a in list_alg:
+        print(a.__name__[5:], cost_alg[a])
     # find competitive ratio for all the algorithms except static opt
     cr = find_cr(list_alg, len(files), cost_alg)
     # plot the results
