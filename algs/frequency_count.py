@@ -1,6 +1,8 @@
 import unittest
 from collections import Counter
 
+long_name = "Frequency Count"
+short_name = "fc"
 
 # Assume no free exchanges, and ignore the initial rearrange cost
 def serve_accesses(sequence, working_list):

@@ -1,3 +1,6 @@
+long_name = "Approximate Offline"
+short_name = "approx off"
+
 def static_state(current_list, future_sequence):
     data = {}
     # can improve this

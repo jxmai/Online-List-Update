@@ -1,5 +1,7 @@
 import unittest
 
+long_name = "Timestamp"
+short_name = "ts"
 
 def serve_accesses(sequence, working_list):
     total_cost = 0

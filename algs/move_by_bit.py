@@ -1,5 +1,7 @@
 import unittest
 
+long_name = "Move by Bit"
+short_name = "mbb"
 
 # Assume no free exchanges
 def serve_accesses(sequence, working_list):

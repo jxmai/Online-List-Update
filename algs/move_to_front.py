@@ -1,5 +1,7 @@
 import unittest
 
+long_name = "Move to front"
+short_name = "mtf"
 
 # Assume no free exchanges
 def serve_accesses(sequence, working_list):

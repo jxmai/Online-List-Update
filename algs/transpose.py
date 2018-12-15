@@ -1,5 +1,7 @@
 import unittest
 
+long_name = "Transpose"
+short_name = "trans"
 
 def serve_accesses(sequence, working_list):
     total_cost = 0

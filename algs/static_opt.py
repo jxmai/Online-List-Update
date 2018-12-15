@@ -1,6 +1,8 @@
 import collections as c
 import unittest
 
+long_name = "Static OPT"
+short_name = "static opt"
 
 # Assume no free exchanges
 def serve_accesses(sequence, working_list):
