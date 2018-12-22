@@ -4,14 +4,16 @@ Project to compare list update algorithms in paid-exchanges-only model.
 
 ## Instructions on how to run the project
 
-Run the following command in the terminal
-```sh
-python3 main.py
-```
 
 Requirements:
 - matplotlib
 - numpy
+
+Run the following command in the terminal
+```sh
+python3 main.py
+```
+Note: takes less than 3 minutes to run.
 
 ## Coding standards:  
 * Short variable names  
