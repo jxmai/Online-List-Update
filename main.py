@@ -14,7 +14,7 @@ def main():
 
     analyze_dist(list_alg)
     analyze_context(list_alg)
-    # analyze_worst_case(10, 3000)
+    analyze_worst_case(10, 3000)
     plt.show()
 
 
@@ -100,7 +100,7 @@ def analyze_dist(list_alg):
 
 def analyze_context(list_alg):
     # files = ["alice29.txt", "pi.txt"]#, "bible.txt"]
-    files = ["alice29.txt"]#, "pi.txt"]
+    files = ["alice29.txt", "pi.txt"]
     cost_alg = {a: [] for a in list_alg}
 
     for file in files:
