@@ -15,7 +15,11 @@ def main():
     # analyze_dist(list_alg)
     # analyze_context(list_alg)
     # analyze_worst_case(10, 3000)
-    analyze_ppfc(500, 50000)
+
+
+    # analyze_ppfc(10, 30)
+
+    analyze_ppfc(50, 5000)
     # analyze_ppfc(1000, 30000)
     # analyze_ppfc_static(500, 50000)
     plt.show()
@@ -26,6 +30,8 @@ def analyze_ppfc(K, N):
     initial_list = [i for i in range(K)]
     # list_alg = [paid_pfc, paid_pfc, paid_pfc, paid_pfc, paid_pfc]
     list_alg = [paid_pfc]
+
+    rep = 2*K
 
     paid = initial_list[::-1]
     paid.extend(initial_list)
@@ -45,7 +51,14 @@ def analyze_ppfc(K, N):
         mbb.append(i)
     fc = []
     for i in initial_list:
-        fc.extend([i]*100)
+        fc.extend([i]*rep)
+    print(fc)
+
+    # har_fc = []
+    # for i in range(len(initial_list)):
+    #     har_fc.extend([initial_list[i]]*int(rep/(i+1)))
+
+    # print(har_fc)
 
     # sequences = [paid, mtf_ts, fc, trans, mbb]
     sequences = [fc]
@@ -63,7 +76,8 @@ def analyze_ppfc(K, N):
         simulate_seq(initial_list, seq, [approx_off, a], cost_alg)
         print(a.__name__[5:], cost_alg[a][0], cost_alg[approx_off][0])
         cr.append((cost_alg[a][0])/(cost_alg[approx_off][0]))
-    short_names = ['dcbaabcd', 'dcba', 'a^10b^10c^10d^10', 'dc', 'abaaabbbbabbbaaa']
+    # short_names = ['dcbaabcd', 'dcba', 'a^10b^10c^10d^10', 'dc', 'abaaabbbbabbbaaa']
+    short_names = ['a^10b^10c^10d^10', 'abcd har']
     name_alg = get_names(list_alg)
     name_alg = [(name_alg[i][0], short_names[i]) for i in range(len(name_alg))]
     plot_data(["Worst cases"], name_alg, cr, False, 'Worst-case cost ratio',
