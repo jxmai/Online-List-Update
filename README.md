@@ -1,9 +1,8 @@
-# Online-List-Update
+## Academic Group Project (Online algorithm) Fall 2018
 
-Project to compare list update algorithms in paid-exchanges-only model.
+Project to compare list update algorithms in paid-exchanges-only model. To learn about list update problem click [here](https://en.wikipedia.org/wiki/List_update_problem).
 
 ## Instructions on how to run the project
-
 
 Requirements:
 - matplotlib
